@@ -15,7 +15,7 @@ class EmployeeSalaryRepo:
     #add employee perosnal deatils 
     async def post_employee_personalDetails(self,employee_personal_details,db:AsyncSession):
         try:
-            employee_details = employee_personal_details.model_dump()
+            employee_details = employee_personal_details   .model_dump()
 
             employee_personal_data = EmployeeDeatils(**employee_details)
 

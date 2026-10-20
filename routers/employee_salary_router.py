@@ -43,3 +43,5 @@ async def increase_employee_salary(employee_id: int,
 @router.get('/',response_model=list[DepartmentTotalResponse])
 async def department_totals(db: AsyncSession = Depends(get_session)):
     return await employee_salary_service.get_department_totals(db)
+
+#get the avegrage 

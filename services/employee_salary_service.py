@@ -1,6 +1,4 @@
-from fastapi import HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
-from pydantic import BaseModel
 
 from repositories.employee_salary_repo import EmployeeSalaryRepo
 from services.payroll_services import PayrollService
