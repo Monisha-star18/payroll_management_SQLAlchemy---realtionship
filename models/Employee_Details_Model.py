@@ -23,4 +23,7 @@ class EmployeeDeatils(Base):
     gender : Mapped[str] = mapped_column(String(7),
                                          nullable=False)
 
+    department : Mapped[str] = mapped_column(String(10),
+                                             nullable=False)
+
     salary :Mapped[Optional["EmployeePayDeatils"]] = relationship( back_populates="employee", uselist=False)

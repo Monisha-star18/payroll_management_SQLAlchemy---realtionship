@@ -90,6 +90,7 @@ class EmployeeSalaryRepo:
                 "employee_id": employee.employee_id,
                 "employee_name": employee.employee_name,
                 "gender": employee.gender,
+                "department":employee.department
             }
 
             employee_salary_details = {
@@ -111,7 +112,7 @@ class EmployeeSalaryRepo:
             employee = await db.get(EmployeePayDeatils, employee_id)
 
             if employee is None:
-                return {"message":f"The id {employee_id} dont exists "}  
+                return {"message":f"The id {employee_id} dont exists ", "details": None}  
                            
 
             await db.execute(

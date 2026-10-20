@@ -1,9 +1,10 @@
 from decimal import Decimal
-from typing import Literal
+from typing import Literal, Optional
 from pydantic import BaseModel,ConfigDict,Field
 
 BASIC_SALARY = dict(gt=5_000,lt=1_000_000)
-Gender = Literal["Male", "Female", "Other"]     
+GENDER = Literal["Male", "Female", "Other"]     
+DEPARTMENT = Literal["IT","HR","Finance"]
 
 class Base(BaseModel):
     pass
@@ -24,8 +25,11 @@ class CreateEmployeeDetails(Base):
     model_config = ConfigDict(extra='forbid')
 
     employee_id: int = Field(ge=1)
-    employee_name: str = Field(min_length=2, max_length=50)
-    gender: Gender
+    employee_name: str = Field(min_length=2, max_length=50,default="")
+    gender: GENDER = Field(default="")
+    department :DEPARTMENT= Field(default="")
+
+
 
 #create a new employee with salary details 
 class CreateEmployeeSalary(Base):
@@ -43,4 +47,4 @@ class IncrementRequest(Base):
 #for the increament response body 
 class IncrementResponse(Base):
     message: str
-    details: EmployeeSalaryResponse
+    details: Optional[EmployeeSalaryResponse] = None
