@@ -27,10 +27,10 @@ class CreateEmployeeSalary(Base):
     basic_salary : float = Field(**BASIC_SALARY)
 
 
-class UpdateEmployee(Base):
-    model_config = ConfigDict(extra='forbid')
+# class UpdateEmployee(Base):
+#     model_config = ConfigDict(extra='forbid')
 
-    basic_salary : float = Field(**BASIC_SALARY)
+#     basic_salary : float = Field(**BASIC_SALARY)
 
 class IncrementRequest(Base):
     model_config = ConfigDict(extra='forbid')
@@ -43,3 +43,8 @@ class CreateEmployeeDetails(Base):
     employee_id: int = Field(ge=1)
     employee_name: str = Field(min_length=2, max_length=50)
     gender: Gender
+
+
+class IncrementResponse(Base):
+    message: str
+    details: EmployeeSalaryResponse

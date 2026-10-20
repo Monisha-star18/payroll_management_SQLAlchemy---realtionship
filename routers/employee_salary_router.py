@@ -4,7 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from services.employee_salary_service import employee_salary_service
 from database import get_session
 
-from schemas import EmployeeSalaryResponse , UpdateEmployee , IncrementRequest, CreateEmployeeDetails,CreateEmployeeSalary
+from schemas import IncrementResponse, IncrementRequest, CreateEmployeeDetails,CreateEmployeeSalary
 
 router = APIRouter(prefix="/api/employee_salary")
 
@@ -21,8 +21,17 @@ async def create_employee_salary(employee_salary_deatils :CreateEmployeeSalary,
                                 ):
     return await employee_salary_service.create_employee(employee_salary_deatils,db)
 
-
 #get the employee deatils 
 @router.get('/{employee_id}')
 async def get_all_employee_details(employee_id: int= Path(gt=0),db:AsyncSession = Depends(get_session)):
     return await employee_salary_service.get_all_employee(employee_id,db)
+
+
+#increment by percentage
+@router.post('/{employee_id}/increment',response_model=IncrementResponse)
+async def increase_employee_salary(employee_id: int, 
+                                   increment_details: IncrementRequest,
+                                    db: AsyncSession = Depends(get_session)
+                                    ):
+    return await employee_salary_service.increase_salary(employee_id, increment_details, db)
+	
