@@ -48,3 +48,8 @@ class IncrementRequest(Base):
 class IncrementResponse(Base):
     message: str
     details: Optional[EmployeeSalaryResponse] = None
+
+#for the department wise total salary
+class DepartmentTotalResponse(Base):
+    department: str
+    Department_total_salary: float

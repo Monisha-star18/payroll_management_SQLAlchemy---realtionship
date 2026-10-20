@@ -4,7 +4,11 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from services.employee_salary_service import employee_salary_service
 from database import get_session
 
-from schemas import IncrementResponse, IncrementRequest, CreateEmployeeDetails,CreateEmployeeSalary
+from schemas import (IncrementResponse, 
+                     IncrementRequest, 
+                     CreateEmployeeDetails,
+                     CreateEmployeeSalary,
+                     DepartmentTotalResponse)
 
 router = APIRouter(prefix="/api/employee_salary")
 
@@ -34,4 +38,8 @@ async def increase_employee_salary(employee_id: int,
                                     db: AsyncSession = Depends(get_session)
                                     ):
     return await employee_salary_service.increase_salary(employee_id, increment_details, db)
-	
+
+#get department wise total salary
+@router.get('/',response_model=list[DepartmentTotalResponse])
+async def department_totals(db: AsyncSession = Depends(get_session)):
+    return await employee_salary_service.get_department_totals(db)

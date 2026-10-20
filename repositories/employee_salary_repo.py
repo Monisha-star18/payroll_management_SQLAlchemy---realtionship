@@ -1,6 +1,6 @@
 from decimal import Decimal
 from fastapi import HTTPException,Depends
-from sqlalchemy import select,text
+from sqlalchemy import func, select,text
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from sqlalchemy.orm import joinedload
@@ -128,4 +128,24 @@ class EmployeeSalaryRepo:
             await db.rollback()
             raise HTTPException(status_code=500, detail=str(er))
 
+    #get department wise salary 
+    async def fetch_department_totals(self,db:AsyncSession):
+        try:
+            stmt = (
+                select (EmployeeDeatils.department,
+                        func.sum(EmployeePayDeatils.basic_salary).label("total_salary")
+                        )
+                .join(EmployeeDeatils.salary)
+                .group_by(EmployeeDeatils.department)
+                .order_by(EmployeeDeatils.department)
+                )
+
+            result = (await db.execute(stmt)).all()
+
+            return [
+                {"department": row.department, "Department_total_salary": float(row.total_salary) }  for row in result 
+            ]
+        
+        except SQLAlchemyError as er:
+            raise HTTPException(status_code=500, detail=str(er))
         

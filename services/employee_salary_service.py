@@ -75,6 +75,10 @@ class EmployeeSalaryService:
     async def increase_salary(self, employee_id: int, increment_details, db: AsyncSession) -> EmployeePayDeatils:
         
         return await self.employee_repository.increase_salary(employee_id, increment_details.percent, db)
-    
+
+    #get department totals 
+    async def get_department_totals(self, db: AsyncSession):
+        return await self.employee_repository.fetch_department_totals(db)
+
 #instance of the Employee Salary Service
 employee_salary_service = EmployeeSalaryService() 
