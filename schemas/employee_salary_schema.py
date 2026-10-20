@@ -8,35 +8,18 @@ Gender = Literal["Male", "Female", "Other"]
 class Base(BaseModel):
     pass
 
-
+#general salary body 
 class EmployeeSalaryResponse(Base):
 
     model_config = ConfigDict(from_attributes=True)
-
+    
     employee_id: int
     basic_salary: float
     da: float
     pf: float
     gross_salary: float
 
-
-class CreateEmployeeSalary(Base):
-    model_config = ConfigDict(extra='forbid')
-
-    employee_id :int = Field(ge=1)
-    basic_salary : float = Field(**BASIC_SALARY)
-
-
-# class UpdateEmployee(Base):
-#     model_config = ConfigDict(extra='forbid')
-
-#     basic_salary : float = Field(**BASIC_SALARY)
-
-class IncrementRequest(Base):
-    model_config = ConfigDict(extra='forbid')
-
-    percent : float = Field(gt=0,le=100) 
-
+#create a new employee with personal details 
 class CreateEmployeeDetails(Base):
     model_config = ConfigDict(extra='forbid')
 
@@ -44,7 +27,20 @@ class CreateEmployeeDetails(Base):
     employee_name: str = Field(min_length=2, max_length=50)
     gender: Gender
 
+#create a new employee with salary details 
+class CreateEmployeeSalary(Base):
+    model_config = ConfigDict(extra='forbid')
 
+    employee_id :int = Field(ge=1)
+    basic_salary : float = Field(**BASIC_SALARY)
+
+#for the increment 
+class IncrementRequest(Base):
+    model_config = ConfigDict(extra='forbid')
+
+    percent : float = Field(gt=0,le=100) 
+
+#for the increament response body 
 class IncrementResponse(Base):
     message: str
     details: EmployeeSalaryResponse

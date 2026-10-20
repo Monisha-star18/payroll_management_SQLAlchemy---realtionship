@@ -12,47 +12,7 @@ class EmployeeSalaryRepo:
     def __init__(self):
         pass
 
-    # #update employee
-    # async def put_employee(self,employee_details,db:AsyncSession):
-    #     try:
-    #         employee = await db.get(EmployeePayDeatils,employee_details["employee_id"])
-
-    #         if not employee :
-    #             return {"message":f"The id {employee_details["employee_id"]} dont exists "}
-
-    #         for column , value in employee_details.items():
-    #             if column != "employee_id":
-    #                 setattr(employee,column,value)
-
-    #         await db.commit()
-    #         await db.refresh(employee)
-
-    #         return{"message":f"Employee with ID {employee_details["employee_id"]} is updated" , 
-    #                            "Salary_deatiles": employee_details}
-        
-
-    #     except SQLAlchemyError as er:
-    #         await db.rollback()
-    #         raise HTTPException(status_code=500, detail=str(er))
-
-    # #delete the employee 
-    # async def delete_employee(self,employee_id: int,db : AsyncSession):
-    #     try:
-    #         employee = await db.get(EmployeePayDeatils,employee_id)
-            
-    #         if not employee :
-    #             return {"message":f"The id {employee_id} dont exists "}
-
-    #         await db.delete(employee)
-    #         await db.commit()
-
-    #         return{"message":f"Employee with ID {employee_id} is deleted"}
-
-    #     except SQLAlchemyError as er:
-    #         await db.rollback()
-    #         raise HTTPException(status_code=500, detail=str(er))
-
-   
+    #add employee perosnal deatils 
     async def post_employee_personalDetails(self,employee_personal_details,db:AsyncSession):
         try:
             employee_details = employee_personal_details.model_dump()
@@ -73,7 +33,7 @@ class EmployeeSalaryRepo:
             await db.rollback()
             raise HTTPException(status_code=500, detail=str(er))
 
-    #create new employess
+    #add new employess salary details 
     async def post_employee(self,employee_details,db:AsyncSession):
         try:
             employee_data = EmployeePayDeatils(**employee_details)
@@ -106,7 +66,7 @@ class EmployeeSalaryRepo:
             raise HTTPException(status_code=500, detail=str(er))
             
 
-  # #get alll employees 
+    #get  employees  by id 
     async def fetch_all_employee_salary(self,employee_id,db:AsyncSession):
         try:
             employee =await db.get(EmployeeDeatils,employee_id, 
@@ -145,7 +105,7 @@ class EmployeeSalaryRepo:
         except SQLAlchemyError as er:
             raise HTTPException(status_code=500, detail=str(er))
 
- #Increment by percentage 
+    #Increment by percentage  using store procedure 
     async def increase_salary(self, employee_id: int, percent: float, db: AsyncSession):
         try:
             employee = await db.get(EmployeePayDeatils, employee_id)
