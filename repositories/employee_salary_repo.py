@@ -5,6 +5,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from sqlalchemy.orm import joinedload
 
+
 from models import EmployeePayDeatils,EmployeeDeatils
 
 class EmployeeSalaryRepo:
@@ -46,21 +47,18 @@ class EmployeeSalaryRepo:
         except IntegrityError as er:
             await db.rollback()
             
-            #getattr(obj, "name", default) reads an attribute by name and returns default instead of raising AttributeError if it doesn’t exist
-            #psycopg2-> pgcode
-            #asyncpg->sqlstate
+            orig = er.orig
+            error_type = type(orig).__name__
 
-            code = getattr(er.orig, "sqlstate", None) or getattr(er.orig, "pgcode", None)
+            if error_type == "ForeignKeyViolationError":
+                raise HTTPException(  status_code=404,  detail="Employee is not registered.") from er
 
-            if code == "23503": #Foreign key violation
-                raise HTTPException(status_code=404, detail="Employee is not registered.")
-            
-            if code == "23505":#Primary key violation
-                raise HTTPException(status_code=409, detail="Salary details already exist.")
-            raise HTTPException(status_code=400, detail=str(er))
+            elif error_type == "UniqueViolationError":
+                raise HTTPException( status_code=409, detail="Salary details already exist.") from er
 
+            else:
+                raise HTTPException(status_code=400,detail="Database integrity constraint violation.") from er
 
-        
         except SQLAlchemyError as er:
             await db.rollback()
             raise HTTPException(status_code=500, detail=str(er))
@@ -78,6 +76,8 @@ class EmployeeSalaryRepo:
                                 detail=f"Employee {employee_id} not found")
             basic = None
             gross_salary = None
+            da = None
+            pf = None
 
             if employee.salary is not None:
                 basic = employee.salary.basic_salary

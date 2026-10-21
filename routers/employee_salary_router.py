@@ -13,6 +13,7 @@ from schemas import (IncrementResponse,
 router = APIRouter(prefix="/api/employee_salary")
 
 #post the new employee personal details 
+#dependency injection
 @router.post("/add_employee_deatils")
 async def add_employee_deatils(employee_details :CreateEmployeeDetails,db:AsyncSession = Depends(get_session)):
     return await employee_salary_service.add_employee_personalDetails(employee_details,db)

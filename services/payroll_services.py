@@ -1,15 +1,17 @@
+from services.payroll_services_interface import PayrollServiceInterface
 
-class PayrollService:
+class PayrollService(PayrollServiceInterface):
     
-    @staticmethod
-    def calculate_da(basic_salary):
+    def calculate_da(self,basic_salary):
         return round(basic_salary * 0.10,2)
     
-    @staticmethod
-    def calculate_pf(basic_salary):
+    
+    def calculate_pf(self,basic_salary):
         return round(basic_salary * 0.12,2)
 
-    @staticmethod
-    def calculate_gross_salary(basic_salary):
+
+    def calculate_gross_salary(self,basic_salary):
         da = PayrollService.calculate_da(basic_salary)
         return round(basic_salary + da,2)
+
+    
