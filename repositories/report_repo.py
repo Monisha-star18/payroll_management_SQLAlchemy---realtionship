@@ -4,7 +4,9 @@ from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 from models import EmployeeDeatils , EmployeePayDeatils
 
-class EmployeeReportRepo:
+from repositories.report_repo_interface import EmployeeReportRepoInterface
+
+class EmployeeReportRepo(EmployeeReportRepoInterface):
 
     def __init__(self):
         pass

@@ -5,10 +5,10 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from sqlalchemy.orm import joinedload
 
-
 from models import EmployeePayDeatils,EmployeeDeatils
+from repositories.employee_salary_interface import EmployeeSalaryRepoInterface
 
-class EmployeeSalaryRepo:
+class EmployeeSalaryRepo(EmployeeSalaryRepoInterface):
 
     def __init__(self):
         pass

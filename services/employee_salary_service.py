@@ -1,15 +1,14 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from repositories.employee_salary_repo import EmployeeSalaryRepo
 from models import EmployeePayDeatils
-
 from services.payroll_services_interface import PayrollServiceInterface
+from repositories.employee_salary_interface import EmployeeSalaryRepoInterface
 
 class EmployeeSalaryService:
 
-    def __init__(self,payroll_services:PayrollServiceInterface):
+    def __init__(self,payroll_services:PayrollServiceInterface,employee_repository:EmployeeSalaryRepoInterface):
         self.payroll_services = payroll_services
-        self.employee_repository=EmployeeSalaryRepo()
+        self.employee_repository=employee_repository
       
     #the payroll calculations 
     def payroll_calutaions(self,basic_salary):
@@ -56,6 +55,4 @@ class EmployeeSalaryService:
     async def get_department_totals(self, db: AsyncSession):
         return await self.employee_repository.fetch_department_totals(db)
 
-#instance of the Employee Salary Service
-employee_salary_service = EmployeeSalaryService() 
 

@@ -11,7 +11,7 @@ class PayrollService(PayrollServiceInterface):
 
 
     def calculate_gross_salary(self,basic_salary):
-        da = PayrollService.calculate_da(basic_salary)
+        da = self.calculate_da(basic_salary)
         return round(basic_salary + da,2)
 
     
