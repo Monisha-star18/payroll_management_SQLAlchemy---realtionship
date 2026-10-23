@@ -1,7 +1,8 @@
 from abc import ABC,abstractmethod
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from schemas.employee_salary_schema import EmployeeReportResponse
+from app.schemas.employee_salary_schema import EmployeeReportResponse
+
 
 class EmployeeReportRepoInterface(ABC):
 

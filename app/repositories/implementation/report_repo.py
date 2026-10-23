@@ -2,10 +2,10 @@ from fastapi import HTTPException
 from sqlalchemy import func, select
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
-from models import EmployeeDeatils , EmployeePayDeatils
 
-from repositories.report_repo_interface import EmployeeReportRepoInterface
-from schemas.employee_salary_schema import EmployeeReportResponse
+from app.models.Employee_Details_Model import EmployeeDeatils
+from app.repositories.interface.report_repo_interface import EmployeeReportRepoInterface
+from app.schemas.employee_salary_schema import EmployeeReportResponse
 
 class EmployeeReportRepo(EmployeeReportRepoInterface):
 

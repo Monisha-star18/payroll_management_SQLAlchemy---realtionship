@@ -5,7 +5,8 @@ from sqlalchemy import (Integer,
 
 from sqlalchemy.orm import Mapped , mapped_column , relationship
 
-from models import Base
+from app.models.Table_Model import Base
+
 
 if TYPE_CHECKING:
     from models.Employee_Salary_Model import EmployeePayDeatils

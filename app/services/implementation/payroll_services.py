@@ -1,4 +1,7 @@
-from services.payroll_services_interface import PayrollServiceInterface
+
+
+from app.services.interface.payroll_services_interface import PayrollServiceInterface
+
 
 class PayrollService(PayrollServiceInterface):
     

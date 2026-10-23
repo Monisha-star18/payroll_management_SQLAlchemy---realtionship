@@ -1,17 +1,16 @@
 from fastapi import APIRouter , Depends,Path
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from database import get_session
-
-from schemas import (IncrementResponse, 
+from app.database.connection import get_session
+from app.dependency.dependency import get_all_services
+from app.schemas.employee_salary_schema import EmployeeCreateResponse, EmployeeFullResponse, SalaryCreateResponse
+from app.services.implementation.employee_salary_service import EmployeeSalaryService
+from app.schemas.employee_salary_schema import (IncrementResponse, 
                      IncrementRequest, 
                      CreateEmployeeDetails,
                      CreateEmployeeSalary,
                      DepartmentTotalResponse)
 
-from dependency.dependency import get_all_services
-from schemas.employee_salary_schema import EmployeeCreateResponse, EmployeeFullResponse, SalaryCreateResponse
-from services.employee_salary_service import EmployeeSalaryService
 
 
 router = APIRouter(prefix="/api/employee_salary")

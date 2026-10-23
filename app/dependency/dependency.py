@@ -1,9 +1,9 @@
-from services.payroll_services import PayrollService
-from services.employee_salary_service import EmployeeSalaryService
-from repositories.employee_salary_repo import EmployeeSalaryRepo
+from app.repositories.implementation.employee_salary_repo import EmployeeSalaryRepo
+from app.repositories.implementation.report_repo import EmployeeReportRepo
+from app.services.implementation.employee_salary_service import EmployeeSalaryService
+from app.services.implementation.payroll_services import PayrollService
+from app.services.implementation.report_services import EmployeeReport
 
-from repositories.report_repo import EmployeeReportRepo
-from services.report_services import EmployeeReport
 
 def get_all_services()->EmployeeSalaryService:
 

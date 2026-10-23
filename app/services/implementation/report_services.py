@@ -1,7 +1,8 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from repositories.report_repo_interface import EmployeeReportRepoInterface
-from schemas.employee_salary_schema import EmployeeReportResponse
+from app.repositories.interface.report_repo_interface import EmployeeReportRepoInterface
+from app.schemas.employee_salary_schema import EmployeeReportResponse
+
 
 class EmployeeReport:
 

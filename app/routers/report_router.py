@@ -1,10 +1,11 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
-from database import get_session
 
-from dependency.dependency import get_all_report_services
-from schemas.employee_salary_schema import EmployeeReportResponse
-from services.report_services import EmployeeReport
+from app.database.connection import get_session
+from app.dependency.dependency import get_all_report_services
+from app.schemas.employee_salary_schema import EmployeeReportResponse
+from app.services.implementation.report_services import EmployeeReport
+
 
 router = APIRouter(prefix="/api/report",tags=["Report"])
 

@@ -1,9 +1,10 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from models import EmployeePayDeatils
-from schemas.employee_salary_schema import CreateEmployeeDetails, CreateEmployeeSalary, DepartmentTotalResponse, EmployeeCreateResponse, EmployeeFullResponse, IncrementRequest, SalaryComponents, SalaryCreateResponse
-from services.payroll_services_interface import PayrollServiceInterface
-from repositories.employee_salary_interface import EmployeeSalaryRepoInterface
+from app.models.Employee_Salary_Model import EmployeePayDeatils
+from app.repositories.interface.employee_salary_interface import EmployeeSalaryRepoInterface
+from app.schemas.employee_salary_schema import CreateEmployeeDetails, CreateEmployeeSalary, DepartmentTotalResponse, EmployeeCreateResponse, EmployeeFullResponse, IncrementRequest, SalaryComponents, SalaryCreateResponse
+from app.services.interface.payroll_services_interface import PayrollServiceInterface
+
 
 class EmployeeSalaryService:
 
