@@ -7,9 +7,9 @@ from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
 from alembic import context
-from models import Base
-from models.Employee_Details_Model import EmployeeDeatils
-from models.Employee_Salary_Model import EmployeePayDeatils
+from app.models.Table_Model import Base
+from app.models.Employee_Details_Model import EmployeeDeatils
+from app.models.Employee_Salary_Model import EmployeePayDeatils
 
 
 # this is the Alembic Config object, which provides
