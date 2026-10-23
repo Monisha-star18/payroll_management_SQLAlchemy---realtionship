@@ -5,13 +5,14 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from models import EmployeeDeatils , EmployeePayDeatils
 
 from repositories.report_repo_interface import EmployeeReportRepoInterface
+from schemas.employee_salary_schema import EmployeeReportResponse
 
 class EmployeeReportRepo(EmployeeReportRepoInterface):
 
-    def __init__(self):
-        pass
-
-    async def fetch_report(self,db:AsyncSession):
+    async def fetch_report(self,
+        db:AsyncSession
+        )->EmployeeReportResponse:
+        
         try:
             #Get total employee count
             stmt_tc = select(func.count()).select_from(EmployeeDeatils)

@@ -3,17 +3,17 @@ from collections.abc import AsyncGenerator
 from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy.ext.asyncio import create_async_engine , async_sessionmaker,AsyncSession
+from sqlalchemy.ext.asyncio import AsyncEngine, create_async_engine , async_sessionmaker,AsyncSession
 
 load_dotenv()
 
-DATABASE_URL = os.getenv("DATABASE_URL")
+DATABASE_URL:str|None = os.getenv("DATABASE_URL")
 
 if not DATABASE_URL :
     raise RuntimeError("DATABASE_URL is not set. Check your .env file.")
 
 #create a new engine 
-engine = create_async_engine ( DATABASE_URL , 
+engine:AsyncEngine = create_async_engine ( DATABASE_URL , 
                         pool_size= 5,
                         pool_timeout=30,
                         pool_recycle=1800,

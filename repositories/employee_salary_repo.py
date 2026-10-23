@@ -7,6 +7,7 @@ from sqlalchemy.orm import joinedload
 
 from models import EmployeePayDeatils,EmployeeDeatils
 from repositories.employee_salary_interface import EmployeeSalaryRepoInterface
+from schemas.employee_salary_schema import CreateEmployeeDetails, DepartmentTotalResponse, EmployeeCreateResponse, EmployeeFullResponse, IncrementResponse, SalaryCreateResponse, SalaryRecord
 
 class EmployeeSalaryRepo(EmployeeSalaryRepoInterface):
 
@@ -14,9 +15,13 @@ class EmployeeSalaryRepo(EmployeeSalaryRepoInterface):
         pass
 
     #add employee perosnal deatils 
-    async def post_employee_personalDetails(self,employee_personal_details,db:AsyncSession):
+    async def post_employee_personalDetails(self, 
+        employee_personal_details: CreateEmployeeDetails, 
+        db: AsyncSession
+        )->EmployeeCreateResponse:
+    
         try:
-            employee_details = employee_personal_details   .model_dump()
+            employee_details = employee_personal_details.model_dump()
 
             employee_personal_data = EmployeeDeatils(**employee_details)
 
@@ -35,7 +40,11 @@ class EmployeeSalaryRepo(EmployeeSalaryRepoInterface):
             raise HTTPException(status_code=500, detail=str(er))
 
     #add new employess salary details 
-    async def post_employee(self,employee_details,db:AsyncSession):
+    async def post_employee(self, 
+        employee_details: SalaryRecord,
+        db: AsyncSession
+        )-> SalaryCreateResponse:
+        
         try:
             employee_data = EmployeePayDeatils(**employee_details)
             db.add(employee_data)
@@ -65,7 +74,11 @@ class EmployeeSalaryRepo(EmployeeSalaryRepoInterface):
             
 
     #get  employees  by id 
-    async def fetch_all_employee_salary(self,employee_id,db:AsyncSession):
+    async def fetch_all_employee_salary(self, 
+        employee_id: int, 
+        db: AsyncSession
+        )-> EmployeeFullResponse:
+
         try:
             employee =await db.get(EmployeeDeatils,employee_id, 
                                    options=[joinedload(EmployeeDeatils.salary)]
@@ -107,7 +120,12 @@ class EmployeeSalaryRepo(EmployeeSalaryRepoInterface):
             raise HTTPException(status_code=500, detail=str(er))
 
     #Increment by percentage  using store procedure 
-    async def increase_salary(self, employee_id: int, percent: float, db: AsyncSession):
+    async def increase_salary(self, 
+        employee_id: int, 
+        percent: float, 
+        db: AsyncSession
+        )-> IncrementResponse:
+
         try:
             employee = await db.get(EmployeePayDeatils, employee_id)
 
@@ -129,7 +147,10 @@ class EmployeeSalaryRepo(EmployeeSalaryRepoInterface):
             raise HTTPException(status_code=500, detail=str(er))
 
     #get department wise salary 
-    async def fetch_department_totals(self,db:AsyncSession):
+    async def fetch_department_totals(self, 
+        db: AsyncSession
+        )->list[DepartmentTotalResponse]:
+        
         try:
             stmt = (
                 select (EmployeeDeatils.department,
