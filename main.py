@@ -1,4 +1,4 @@
-from fastapi import FastAPI,APIRouter
+from fastapi import FastAPI
 
 from routers.employee_salary_router import router as employee_salary_router
 from routers.report_router import router as report_router
